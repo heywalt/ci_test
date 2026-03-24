@@ -1,0 +1,16 @@
+/*
+=========================================================================================
+  Shared
+=========================================================================================
+*/
+
+/* Core */
+@import "./shared/theme";
+@import "./shared/variable";
+@import "./shared/preference";
+@import "./shared/support";
+@import "./shared/root";
+@import "./shared/typography";
+@import "./shared/miscellaneous";
+@import "./shared/logo";
+@import "./shared/button";

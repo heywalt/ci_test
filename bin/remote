@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+declare -a COMMANDS=("iex" "logs" "ssh")
+
+function select_command {
+  case $(for cmd in "${COMMANDS[@]}"; do echo $cmd; done | gum filter) in
+    iex)
+      gcloud compute ssh "$1" --zone="$2" --command="docker exec -it \$(docker ps -q) bin/walt_ui remote" -- -t
+      ;;
+
+    logs)
+      gcloud compute ssh "$1" --zone="$2" --command="docker logs \$(docker ps -q) -f | less" -- -t
+      ;;
+
+    ssh)
+      gcloud compute ssh "$1" --zone="$2"
+      ;;
+  esac
+}
+
+vm_data=$(gcloud compute instances list --filter="$FILTER" --format="value(name,zone)" | gum filter)
+vm_name=$(echo $vm_data | cut -d' ' -f1)
+vm_zone=$(echo $vm_data | cut -d' ' -f2)
+
+echo "Connecting to ${vm_name}..."
+select_command $vm_name $vm_zone

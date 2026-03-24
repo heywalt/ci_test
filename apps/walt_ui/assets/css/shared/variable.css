@@ -1,0 +1,21 @@
+:root {
+
+  /*
+  =========================================================================================
+    Layout
+  =========================================================================================
+  */
+
+  --grid-columns: 16;
+
+  --grid-min-width: 20rem;
+  --grid-max-width: 80rem;
+
+  --grid-column-min-width: calc(var(--grid-min-width) / var(--grid-columns));
+  --grid-column-max-width: calc(var(--grid-max-width) / var(--grid-columns));
+
+  --grid-gap: var(--grid-column-min-width);
+
+  --grid-template-columns: repeat(var(--grid-columns), minmax(var(--grid-column-min-width), var(--grid-column-max-width)));
+
+}

@@ -1,0 +1,15 @@
+<.flash_group flash={@flash} />
+<WaltUiWeb.App.PartialHTML.header current_user={@current_user} />
+<%= if show_tab_navigation?(@socket) do %>
+  <.tab_nav
+    tabs={[
+      %{label: "Agenda", path: "/agenda"},
+      %{label: "Contacts", path: "/contacts"}
+    ]}
+    current_path={@socket.view}
+  />
+<% end %>
+<main class="main">
+  {@inner_content}
+</main>
+<WaltUiWeb.App.PartialHTML.footer />

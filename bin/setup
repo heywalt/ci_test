@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ ! -f .envrc.private ]; then
+  echo "Error: .envrc.private not found." >&2
+  echo "Get .envrc.private from the 1Password Engineering vault and place it in the project root before continuing." >&2
+  exit 1
+fi
+
+source .envrc
+source .envrc.private
+
+docker compose up -d
+
+(cd apps/marketing/assets && npm install)
+(cd apps/walt_ui/assets && npm install)
+mix setup

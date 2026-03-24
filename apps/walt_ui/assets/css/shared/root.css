@@ -1,0 +1,24 @@
+html,
+body,
+.live {
+  position: relative;
+  min-height: 100vh;
+  overscroll-behavior-y: none;
+}
+
+html {
+  color-scheme: light dark;
+  background-color: var(--color-neutral-1);
+  hanging-punctuation: first last;
+}
+
+body {
+  accent-color: var(--color-brand-9);
+  background-color: var(--color-neutral-1);
+  font-family: var(--font-display), var(--font-fallback);
+  font-feature-settings: "ss01" 1;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-neutral-11);
+  line-height: round(up, calc(1em + 0.5rem), 0.25rem);
+}

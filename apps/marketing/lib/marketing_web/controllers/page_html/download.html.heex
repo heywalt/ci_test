@@ -1,0 +1,29 @@
+<div class="content self-center">
+  <section class="mb-8 mx-auto max-w-4xl text-center">
+    <h1 class="text-4xl lg:text-5xl">Start closing more deals</h1>
+    <p class="mt-4 text-xl lg:text-2xl">Download now and start turning your contacts into closings</p>
+  </section>
+  <section class="max-w-lg mx-auto">
+    <div class="flex flex-wrap align-start gap-4 p-6 bg-brand-3 border-1 border-brand-6 rounded-lg shadow-xs">
+      <.icon class="text-3xl text-brand-9" name="mobile" />
+      <div class="grow">
+        <h3 class="text-xl">For iOS & Android</h3>
+        <p class="text-sm mb-4">Requires iOS 16 / Android 7 or above</p>
+        <div class="flex items-center gap-4">
+          <.link href="https://apps.apple.com/us/app/hey-walt/id6593690873">
+            <img class="h-12" src={~p"/images/vendor/apple/app-store-badge.svg"} alt="Download on App Store" />
+          </.link>
+          <.link href="https://play.google.com/store/apps/details?id=ai.heywalt.heywalt">
+            <img class="h-12" src={~p"/images/vendor/google/play-store-badge.svg"} alt="Download on Play Store" />
+          </.link>
+        </div>
+      </div>
+      <img
+        class="hidden sm:block aspect-square p-1 h-16 bg-white border-1 border-brand-6 rounded-md shadow-xs"
+        src={~p"/images/marketing/app-download-qr-code.svg"}
+        alt="App Download QR Code"
+      />
+    </div>
+    <MarketingWeb.PartialHTML.lead_gen_form />
+  </section>
+</div>

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# For spinning up clustered iEx sessions. You can pass arguments to this just
+# like a normal iEx command, e.g. `bin/iex -S mix phx.server`.
+
+random=$(uuidgen | sed 's/[-]//g' | head -c 10)
+iex --cookie localdev --sname $random $@

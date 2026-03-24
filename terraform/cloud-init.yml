@@ -1,0 +1,12 @@
+#cloud-config
+
+write_files:
+- path: /etc/systemd/system/docker.service.d/override.conf
+  permissions: 0644
+  owner: root
+  content: |
+    [Service]
+    ExecStop=/bin/sh -c '/usr/bin/docker stop $(/usr/bin/docker ps -q)'
+
+runcmd:
+- systemctl daemon-reload

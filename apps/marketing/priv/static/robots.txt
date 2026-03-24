@@ -1,0 +1,10 @@
+# robots.txt for https://heywalt.ai/
+
+User-agent: *
+Disallow: /icons/
+Disallow: /images/
+Disallow: /contact
+Disallow: /skyslope
+Disallow: /sold.com
+
+Sitemap: https://heywalt.ai/sitemap.xml

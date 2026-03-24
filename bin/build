@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+IMAGE_NAME=${1:-heywalt}
+IMAGE_TAG=${2-local}
+
+tar -cvzf apps.mix.tar.gz apps/*/mix.exs
+docker build -t ${IMAGE_NAME}:${IMAGE_TAG} --build-arg POSTHOG_API_KEY=${POSTHOG_API_KEY} .

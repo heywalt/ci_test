@@ -1,0 +1,45 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-neutral-12);
+  letter-spacing: -0.0125em;
+  text-wrap: balance;
+
+  &:not(:first-child) {
+    margin-top: round(up, 0.125lh, 0.25rem);
+  }
+
+  &:not(:last-child) {
+    margin-bottom: round(up, 0.125lh, 0.25rem);
+  }
+}
+
+strong {
+  font-weight: var(--font-weight-bold);
+}
+
+a {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-brand-9);
+
+  &:hover {
+    text-decoration: underline 0.125em;
+    text-underline-offset: 0.25em;
+  }
+
+  &:focus-visible {
+    border-radius: 0;
+    outline: 0.5rem solid var(--color-brand-11);
+    outline-offset: 0;
+  }
+}
+
+kbd {}
+
+mark {}
+
+::selection {}

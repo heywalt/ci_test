@@ -1,0 +1,23 @@
+#!/bin/sh
+set -eu
+
+cd -P -- "$(dirname -- "$0")"
+
+if [ "${SKIP_CLOUD_SQL_PROXY:-}" != "true" ]; then
+  printf '%s' "$WALT_UI_SERVICE_ACCOUNT_JSON" > /app/credentials.json
+
+  # If the directory exists, likely a restart, kill the process and remove the directory
+  if [ -d "/tmp/cloudsql/${DB_CONNECTION}" ]; then
+    pkill cloud_sql_proxy
+    rm -R /tmp/cloudsql/*
+    sleep 5s
+  fi
+
+  ./cloud_sql_proxy --credentials-file /app/credentials.json --unix-socket /tmp/cloudsql ${DB_CONNECTION} ${HOUSE_CANARY_DB_CONNECTION} &
+fi
+
+echo "Running database migrations"
+./walt_ui eval WaltUi.Release.migrate
+
+echo "Starting app server"
+RELEASE_NAME=$(echo $HOSTNAME | sed 's/-/_/g') PHX_SERVER=true exec ./walt_ui start

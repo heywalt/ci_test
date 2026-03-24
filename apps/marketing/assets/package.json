@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "alpinejs": "~3.14",
+    "posthog-js": "~1.219",
+    "topbar": "~3.0"
+  }
+}

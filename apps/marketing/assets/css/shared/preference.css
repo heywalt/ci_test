@@ -1,0 +1,9 @@
+@media (prefers-color-scheme: dark) {
+  :root {}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :has(:target) {
+    scroll-behavior: smooth;
+  }
+}

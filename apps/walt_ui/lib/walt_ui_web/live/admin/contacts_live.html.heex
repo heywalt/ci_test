@@ -1,0 +1,514 @@
+<section class="contacts-page" id="admin-contacts" phx-hook="CopyToClipboard">
+  <div class="admin-wrapper">
+    <div class="admin-header">
+      <h1>Contact Details</h1>
+      <div class="admin-breadcrumb">
+        <.link navigate={~p"/manage"}>Admin</.link>
+        <span class="separator">/</span>
+        <.link navigate={~p"/manage/users/#{@contact.user_id}"}>User Details</.link>
+        <span class="separator">/</span>
+        <span>{@contact.first_name} {@contact.last_name}</span>
+      </div>
+    </div>
+
+    <div class="admin-main">
+      <.admin_card class="contact-detail">
+        <:header>
+          <h3>Contact Information</h3>
+        </:header>
+        <:body>
+          <div class="info-card">
+            <div class="info-row">
+              <div class="info-label">Name</div>
+              <div class="info-value">{@contact.first_name} {@contact.last_name}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Contact ID</div>
+              <div class="info-value">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-gray-500 font-mono">{@contact.id}</span>
+                  <.copy_button text={@contact.id} size="micro" />
+                </div>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Email</div>
+              <div class="info-value">
+                <%= if @contact.email do %>
+                  {@contact.email}
+                <% else %>
+                  <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                <% end %>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Phone</div>
+              <div class="info-value">
+                <%= if @contact.phone do %>
+                  {@contact.phone}
+                <% else %>
+                  <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                <% end %>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Move Score</div>
+              <div class="info-value"><span class="badge badge-info">{@contact.ptt}</span></div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Created</div>
+              <div class="info-value">{Calendar.strftime(@contact.inserted_at, "%B %d, %Y at %I:%M %p")}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Tags</div>
+              <div class="info-value">
+                <%= if @contact.tags != [] do %>
+                  <div class="flex flex-wrap gap-2">
+                    <%= for tag <- @contact.tags do %>
+                      <span
+                        class="badge"
+                        style={"background-color: #{tag.color}; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;"}
+                      >
+                        {tag.name}
+                      </span>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <span style="color: #9ca3af; font-style: italic;">No tags</span>
+                <% end %>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Hidden</div>
+              <div class="info-value">
+                <%= if @contact.is_hidden do %>
+                  <span class="badge badge-warning">Hidden</span>
+                <% else %>
+                  <span class="badge badge-success">Visible</span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </:body>
+      </.admin_card>
+
+      <%= if @contact_metadata do %>
+        <div class="admin-grid cols-2">
+          <!-- Personal Information -->
+          <.admin_card>
+            <:header>
+              <h3>Personal Information</h3>
+            </:header>
+            <:body>
+              <div class="info-card">
+                <div class="info-row">
+                  <div class="info-label">Full Name</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.main.full_name do %>
+                      {@contact_metadata.main.full_name}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Date of Birth</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.main.date_of_birth do %>
+                      {@contact_metadata.main.date_of_birth}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Age</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.main.age do %>
+                      {@contact_metadata.main.age}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Education</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.main.education do %>
+                      {@contact_metadata.main.education}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Marital Status</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.main.marital_status do %>
+                      {@contact_metadata.main.marital_status}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Occupation</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.main.occupation do %>
+                      {@contact_metadata.main.occupation}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </:body>
+          </.admin_card>
+          
+<!-- Financial Information -->
+          <.admin_card>
+            <:header>
+              <h3>Financial Information</h3>
+            </:header>
+            <:body>
+              <div class="info-card">
+                <div class="info-row">
+                  <div class="info-label">Household Income</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.financial.household_income do %>
+                      {@contact_metadata.financial.household_income}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Net Worth</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.financial.net_worth do %>
+                      {@contact_metadata.financial.net_worth}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Affluency</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.financial.affluency do %>
+                      {@contact_metadata.financial.affluency}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Homeowner Status</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.financial.homeowner_status do %>
+                      {@contact_metadata.financial.homeowner_status}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Latest Mortgage Amount</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.financial.latest_mortgage_amount do %>
+                      {@contact_metadata.financial.latest_mortgage_amount}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Home Equity Loan</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.financial.home_equity_loan_amount do %>
+                      {@contact_metadata.financial.home_equity_loan_amount}
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </:body>
+          </.admin_card>
+        </div>
+
+        <div class="admin-grid cols-2">
+          <!-- Property Information -->
+          <.admin_card>
+            <:header>
+              <h3>Property Information</h3>
+            </:header>
+            <:body>
+              <div class="info-card">
+                <div class="info-row">
+                  <div class="info-label">Property Type</div>
+                  <div class="info-value">{display_value(@contact_metadata.home.property_type)}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Home Value</div>
+                  <div class="info-value">{display_value(@contact_metadata.home.target_home_market_value)}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Bedrooms</div>
+                  <div class="info-value">{display_value(@contact_metadata.home.number_of_bedrooms)}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Bathrooms</div>
+                  <div class="info-value">{display_value(@contact_metadata.home.number_of_bathrooms)}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Year Built</div>
+                  <div class="info-value">{display_value(@contact_metadata.home.year_built)}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Living Area</div>
+                  <div class="info-value">{display_value(@contact_metadata.home.living_area)}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Has Pool</div>
+                  <div class="info-value">
+                    <%= cond do %>
+                      <% @contact_metadata.home.has_pool == true -> %>
+                        Yes
+                      <% @contact_metadata.home.has_pool == false -> %>
+                        No
+                      <% true -> %>
+                        <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </:body>
+          </.admin_card>
+          
+<!-- Lifestyle & Social -->
+          <.admin_card>
+            <:header>
+              <h3>Lifestyle & Social</h3>
+            </:header>
+            <:body>
+              <div class="info-card">
+                <div class="info-row">
+                  <div class="info-label">Social Media Active</div>
+                  <div class="info-value">
+                    <%= cond do %>
+                      <% @contact_metadata.personal_info.is_active_on_social_media == true -> %>
+                        Yes
+                      <% @contact_metadata.personal_info.is_active_on_social_media == false -> %>
+                        No
+                      <% true -> %>
+                        <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Likes Travel</div>
+                  <div class="info-value">
+                    <%= cond do %>
+                      <% @contact_metadata.personal_info.likes_travel == true -> %>
+                        Yes
+                      <% @contact_metadata.personal_info.likes_travel == false -> %>
+                        No
+                      <% true -> %>
+                        <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Has Children</div>
+                  <div class="info-value">
+                    <%= cond do %>
+                      <% @contact_metadata.personal_info.has_children_in_household == true -> %>
+                        Yes
+                      <% @contact_metadata.personal_info.has_children_in_household == false -> %>
+                        No
+                      <% true -> %>
+                        <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Number of Children</div>
+                  <div class="info-value">{display_value(@contact_metadata.personal_info.number_of_children)}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Has Pet</div>
+                  <div class="info-value">
+                    <%= cond do %>
+                      <% @contact_metadata.personal_info.has_pet == true -> %>
+                        Yes
+                      <% @contact_metadata.personal_info.has_pet == false -> %>
+                        No
+                      <% true -> %>
+                        <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Vehicle</div>
+                  <div class="info-value">
+                    <%= if @contact_metadata.personal_info.vehicle_make do %>
+                      {@contact_metadata.personal_info.vehicle_make} {@contact_metadata.personal_info.vehicle_model} ({@contact_metadata.personal_info.vehicle_year})
+                    <% else %>
+                      <span style="color: #9ca3af; font-style: italic;">Not available</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </:body>
+          </.admin_card>
+        </div>
+        
+<!-- Raw Metadata (Collapsible) -->
+        <.admin_card>
+          <:header>
+            <h3>Raw Enrichment Data (Debug)</h3>
+          </:header>
+          <:body>
+            <details>
+              <summary class="cursor-pointer text-sm font-medium text-gray-600 hover:text-gray-800 mb-3">
+                Click to view raw JSON data
+              </summary>
+              <div class="form-group">
+                <textarea readonly class="admin-form" rows="10"><%= @contact_meta %></textarea>
+              </div>
+            </details>
+          </:body>
+        </.admin_card>
+      <% end %>
+
+      <.admin_card>
+        <:header>
+          <h3>Provider Data Sources</h3>
+        </:header>
+        <:body>
+          <div class="space-y-6">
+            <!-- Endato Provider -->
+            <div class="admin-section">
+              <div class="section-header">
+                <h2>Endato</h2>
+                <div class="provider-status">
+                  <%= if @provider_data.endato do %>
+                    <span class="badge badge-success">Data Available</span>
+                    <div class="text-xs text-gray-500 mt-1">
+                      Updated: {Calendar.strftime(@provider_data.endato.updated_at, "%m/%d/%Y")}
+                    </div>
+                  <% else %>
+                    <span class="badge badge-neutral">No Data</span>
+                  <% end %>
+                </div>
+              </div>
+
+              <.provider_data_display provider_data={@provider_data.endato} provider_name="Endato" />
+
+              <button phx-click="call_endato" phx-value-phone={"#{@contact.phone}"} class="button button--sm mt-2">
+                Refresh Endato
+              </button>
+              <%= if @endato_output do %>
+                <div class="mt-4">
+                  <div class="badge badge-info mb-2">{to_string(@endato_status)}</div>
+                  <div class="form-group">
+                    <textarea readonly class="admin-form text-xs" rows="6"><%= @endato_output %></textarea>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            
+<!-- Faraday Provider -->
+            <div class="admin-section">
+              <div class="section-header">
+                <h2>Faraday</h2>
+                <div class="provider-status">
+                  <%= if @provider_data.faraday do %>
+                    <span class="badge badge-success">Data Available</span>
+                    <div class="text-xs text-gray-500 mt-1">
+                      Updated: {Calendar.strftime(@provider_data.faraday.updated_at, "%m/%d/%Y")}
+                    </div>
+                  <% else %>
+                    <span class="badge badge-neutral">No Data</span>
+                  <% end %>
+                </div>
+              </div>
+
+              <.provider_data_display provider_data={@provider_data.faraday} provider_name="Faraday" />
+
+              <button phx-click="call_faraday" class="button button--sm mt-2">
+                Refresh Faraday
+              </button>
+              <%= if @faraday_output do %>
+                <div class="mt-4">
+                  <div class="badge badge-info mb-2">{to_string(@faraday_status)}</div>
+                  <div class="form-group">
+                    <textarea readonly class="admin-form text-xs" rows="6"><%= @faraday_output %></textarea>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            
+<!-- Trestle Provider -->
+            <div class="admin-section">
+              <div class="section-header">
+                <h2>Trestle</h2>
+                <div class="provider-status">
+                  <%= if @provider_data.trestle do %>
+                    <span class="badge badge-success">Data Available</span>
+                    <div class="text-xs text-gray-500 mt-1">
+                      Updated: {Calendar.strftime(@provider_data.trestle.updated_at, "%m/%d/%Y")}
+                    </div>
+                  <% else %>
+                    <span class="badge badge-neutral">No Data</span>
+                  <% end %>
+                </div>
+              </div>
+
+              <.provider_data_display provider_data={@provider_data.trestle} provider_name="Trestle" />
+            </div>
+            
+<!-- Jitter Provider -->
+            <div class="admin-section">
+              <div class="section-header">
+                <h2>Jitter (AI)</h2>
+                <div class="provider-status">
+                  <%= if @provider_data.jitter do %>
+                    <span class="badge badge-success">Data Available</span>
+                    <div class="text-xs text-gray-500 mt-1">
+                      Updated: {Calendar.strftime(@provider_data.jitter.updated_at, "%m/%d/%Y")}
+                    </div>
+                  <% else %>
+                    <span class="badge badge-neutral">No Data</span>
+                  <% end %>
+                </div>
+              </div>
+
+              <.provider_data_display_compact provider_data={@provider_data.jitter} provider_name="Jitter" />
+            </div>
+            
+<!-- Gravatar Provider -->
+            <div class="admin-section">
+              <div class="section-header">
+                <h2>Gravatar</h2>
+                <div class="provider-status">
+                  <%= if @provider_data.gravatar do %>
+                    <span class="badge badge-success">Data Available</span>
+                    <div class="text-xs text-gray-500 mt-1">
+                      Updated: {Calendar.strftime(@provider_data.gravatar.updated_at, "%m/%d/%Y")}
+                    </div>
+                  <% else %>
+                    <span class="badge badge-neutral">No Data</span>
+                  <% end %>
+                </div>
+              </div>
+
+              <.provider_data_display_compact provider_data={@provider_data.gravatar} provider_name="Gravatar" />
+            </div>
+          </div>
+        </:body>
+      </.admin_card>
+    </div>
+  </div>
+</section>

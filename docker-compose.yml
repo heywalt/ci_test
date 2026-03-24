@@ -1,0 +1,79 @@
+services:
+  db:
+    image: postgres:14.13
+    container_name: walt-ui-db
+    volumes:
+      - pgdata:/usr/share/walt-ui/postgres/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGPASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  typesense:
+    image: typesense/typesense:27.0
+    command: "--data-dir /data --api-key localdevapikey --enable-cors"
+    ports:
+      - 8108:8108
+    volumes:
+      - searchdata:/data
+  setup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+      args:
+        - OBAN_LICENSE_KEY=${OBAN_LICENSE_KEY}
+        - POSTHOG_API_KEY=${POSTHOG_API_KEY}
+    image: walt-ui
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+      - .env.secrets
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DB_PASSWORD=postgres
+      - HOUSE_CANARY_DB_PASSWORD=postgres
+      - POOL_SIZE=10
+    working_dir: /app
+    profiles:
+      - setup
+  app:
+    image: walt-ui
+    container_name: walt-ui-app
+    depends_on:
+      db:
+        condition: service_healthy
+      typesense:
+        condition: service_started
+    env_file:
+      - .env
+      - .env.secrets
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DB_PASSWORD=postgres
+      - HOUSE_CANARY_DB_PASSWORD=postgres
+      - POOL_SIZE=10
+      - SKIP_CLOUD_SQL_PROXY=true
+      - PHX_SERVER=true
+    ports:
+      - "8080:8080"
+      - "8008:8008"
+    working_dir: /app
+    command: mix phx.server
+volumes:
+  pgdata:
+    driver: local
+  searchdata:
+    driver: local

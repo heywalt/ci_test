@@ -1,0 +1,70 @@
+name: Release
+on:
+  release:
+    types:
+      - released
+env:
+  GITHUB_SHA: ${{ github.sha }}
+  DOCKER_IMAGE: walt-ui
+  REGION: us-east5
+  REGISTRY: us-east5-docker.pkg.dev
+  REPOSITORY: heywalt/heywalt
+jobs:
+  publish:
+    name: Publish Artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: GCP Authentication
+        id: 'auth'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.CI_SERVICE_ACCOUNT_KEY }}'
+      - name: Setup gcloud SDK
+        uses: 'google-github-actions/setup-gcloud@v0'
+      - name: Check gcloud CLI
+        run: 'gcloud info'
+      - name: GCR Authentication
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: _json_key
+          password: ${{ secrets.CI_SERVICE_ACCOUNT_KEY }}
+      - name: Prep Build
+        run: bin/package
+      - name: Build and Push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          file: Dockerfile
+          build-args: |
+            OBAN_LICENSE_KEY=${{ secrets.OBAN_LICENSE_KEY }}
+            POSTHOG_API_KEY=${{ secrets.POSTHOG_API_KEY }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/${{ env.DOCKER_IMAGE }}:${{ env.GITHUB_SHA }}
+            ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/${{ env.DOCKER_IMAGE }}:latest
+  deploy:
+    name: Deploy to Production
+    environment: production
+    runs-on: ubuntu-latest
+    needs: publish
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.4
+          terraform_wrapper: false
+      - name: Apply
+        run: |
+          cd terraform
+          terraform init -backend-config="bucket=hey-walt-prod-terraform"
+          terraform apply -auto-approve
+        env:
+          TF_VAR_image_tag: ${{ github.sha }}
+          GOOGLE_CREDENTIALS: ${{ secrets.CI_SERVICE_ACCOUNT_KEY }}

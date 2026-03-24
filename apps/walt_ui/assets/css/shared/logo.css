@@ -1,0 +1,15 @@
+.logo {
+  display: flex;
+  place-items: center;
+  background-image: url("/images/brand/amby-logo.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 0;
+  line-height: 0;
+  aspect-ratio: 659 / 224;
+  height: 1.75rem;
+
+  &.logo--dark {
+    background-image: url("/images/brand/amby-logo-dark.svg");
+  }
+}

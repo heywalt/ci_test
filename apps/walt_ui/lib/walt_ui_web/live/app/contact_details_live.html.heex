@@ -1,0 +1,252 @@
+<section class="contact-details-page">
+  <div class="admin-wrapper">
+    <!-- Header Section -->
+    <div class="contact-header">
+      <div class="contact-header-left">
+        <.link navigate={~p"/contacts"} class="back-link">
+          ← Back to Contacts
+        </.link>
+
+        <div class="contact-title-section">
+          <div class="contact-avatar-large">
+            <%= if @contact.avatar do %>
+              <img src={@contact.avatar} alt={contact_name(@contact)} />
+            <% else %>
+              <div class="avatar-initials-large">
+                {contact_initials(@contact)}
+              </div>
+            <% end %>
+          </div>
+
+          <div class="contact-title-info">
+            <h1 class="contact-title">{contact_name(@contact)}</h1>
+            <%= if @contact.ptt do %>
+              <div class="contact-ptt" id="contact-ptt-container" phx-hook="PTTAnimation">
+                {ptt_circle(%{ptt: @contact.ptt})}
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-header-actions">
+        <button phx-click="toggle_favorite" class={"favorite-btn #{if @contact.is_favorite, do: "active", else: ""}"}>
+          <%= if @contact.is_favorite do %>
+            ★ Favorited
+          <% else %>
+            ☆ Add to Favorites
+          <% end %>
+        </button>
+      </div>
+    </div>
+    
+<!-- Main Content -->
+    <div class="contact-details-main">
+      <div class="contact-details-grid">
+        
+<!-- Basic Information -->
+        <div class="details-card">
+          <h2 class="card-title">Contact Information</h2>
+          <div class="details-grid">
+            <%= if format_emails(@contact) != [] do %>
+              <div class="detail-item">
+                <span class="detail-label">Email</span>
+                <div class="detail-value">
+                  <%= for email <- format_emails(@contact) do %>
+                    <div><a href={"mailto:#{email}"}>{email}</a></div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+            <%= if format_phone_numbers(@contact) != [] do %>
+              <div class="detail-item">
+                <span class="detail-label">Phone</span>
+                <div class="detail-value">
+                  <%= for phone <- format_phone_numbers(@contact) do %>
+                    <div><a href={"tel:#{phone}"}>{phone}</a></div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+            <%= if format_address(@contact) do %>
+              <div class="detail-item">
+                <span class="detail-label">Address</span>
+                <div class="detail-value">{format_address(@contact)}</div>
+              </div>
+            <% end %>
+
+            <%= if @contact.birthday do %>
+              <div class="detail-item">
+                <span class="detail-label">Birthday</span>
+                <div class="detail-value">{format_date(@contact.birthday)}</div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        
+<!-- Enrichment Data -->
+        <%= if @contact.enrichment do %>
+          <!-- Personal Information -->
+          <div class="details-card">
+            <h2 class="card-title">Personal Information</h2>
+            <div class="details-grid">
+              <%= if @contact.enrichment.full_name do %>
+                <div class="detail-item">
+                  <span class="detail-label">Full Name</span>
+                  <div class="detail-value">{@contact.enrichment.full_name}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.age do %>
+                <div class="detail-item">
+                  <span class="detail-label">Age</span>
+                  <div class="detail-value">{@contact.enrichment.age}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.date_of_birth do %>
+                <div class="detail-item">
+                  <span class="detail-label">Date of Birth</span>
+                  <div class="detail-value">{format_date(@contact.enrichment.date_of_birth)}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.marital_status do %>
+                <div class="detail-item">
+                  <span class="detail-label">Marital Status</span>
+                  <div class="detail-value">{@contact.enrichment.marital_status}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.education do %>
+                <div class="detail-item">
+                  <span class="detail-label">Education</span>
+                  <div class="detail-value">{@contact.enrichment.education}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.occupation do %>
+                <div class="detail-item">
+                  <span class="detail-label">Occupation</span>
+                  <div class="detail-value">{@contact.enrichment.occupation}</div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          
+<!-- Financial Information -->
+          <div class="details-card">
+            <h2 class="card-title">Financial Information</h2>
+            <div class="details-grid">
+              <%= if @contact.enrichment.household_income do %>
+                <div class="detail-item">
+                  <span class="detail-label">Household Income</span>
+                  <div class="detail-value">{format_currency(@contact.enrichment.household_income)}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.net_worth do %>
+                <div class="detail-item">
+                  <span class="detail-label">Net Worth</span>
+                  <div class="detail-value">{format_currency(@contact.enrichment.net_worth)}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.latest_mortgage_amount do %>
+                <div class="detail-item">
+                  <span class="detail-label">Latest Mortgage</span>
+                  <div class="detail-value">{format_currency(@contact.enrichment.latest_mortgage_amount)}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.latest_mortgage_date do %>
+                <div class="detail-item">
+                  <span class="detail-label">Mortgage Date</span>
+                  <div class="detail-value">{format_date(@contact.enrichment.latest_mortgage_date)}</div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          
+<!-- Property Information -->
+          <div class="details-card">
+            <h2 class="card-title">Property Information</h2>
+            <div class="details-grid">
+              <%= if @contact.enrichment.homeowner_status do %>
+                <div class="detail-item">
+                  <span class="detail-label">Homeowner Status</span>
+                  <div class="detail-value">{@contact.enrichment.homeowner_status}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.target_home_market_value do %>
+                <div class="detail-item">
+                  <span class="detail-label">Home Market Value</span>
+                  <div class="detail-value">{format_currency(@contact.enrichment.target_home_market_value)}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.property_type do %>
+                <div class="detail-item">
+                  <span class="detail-label">Property Type</span>
+                  <div class="detail-value">{@contact.enrichment.property_type}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.number_of_bedrooms do %>
+                <div class="detail-item">
+                  <span class="detail-label">Bedrooms</span>
+                  <div class="detail-value">{@contact.enrichment.number_of_bedrooms}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.number_of_bathrooms do %>
+                <div class="detail-item">
+                  <span class="detail-label">Bathrooms</span>
+                  <div class="detail-value">{@contact.enrichment.number_of_bathrooms}</div>
+                </div>
+              <% end %>
+
+              <%= if @contact.enrichment.year_built do %>
+                <div class="detail-item">
+                  <span class="detail-label">Year Built</span>
+                  <div class="detail-value">{@contact.enrichment.year_built}</div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        
+<!-- Tags -->
+        <%= if @contact.tags && @contact.tags != [] do %>
+          <div class="details-card">
+            <h2 class="card-title">Tags</h2>
+            <div class="tags-container">
+              <%= for tag <- @contact.tags do %>
+                <span class="tag">{tag.name}</span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        
+<!-- Activity & Notes -->
+        <%= if @contact.events && @contact.events != [] do %>
+          <div class="details-card">
+            <h2 class="card-title">Recent Activity</h2>
+            <div class="activity-list">
+              <%= for event <- Enum.take(@contact.events, 10) do %>
+                <div class="activity-item">
+                  <div class="activity-type">{event.type}</div>
+                  <div class="activity-event">{event.event}</div>
+                  <div class="activity-date">{format_date(event.inserted_at)}</div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

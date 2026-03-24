@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "D9XNNP7727.ai.heywalt.heywalt",
+        "paths": [
+          "/checkout/success",
+          "/checkout/canceled",
+          "/contact*"
+        ]
+      }
+    ]
+  }
+}

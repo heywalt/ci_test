@@ -1,0 +1,123 @@
+<section class="contacts-page" id="contacts-scroll-container" phx-hook="ScrollRestore">
+  <div class="admin-wrapper">
+    <!-- Favorites Section -->
+    <div class="favorites-section">
+      <h2 class="favorites-title">Favorites</h2>
+      <%= if @favorites == [] do %>
+        <div class="favorites-empty">
+          <span>Your favorite contacts will appear here</span>
+        </div>
+      <% else %>
+        <div class="favorites-container">
+          <%= for contact <- @favorites do %>
+            <.link navigate={~p"/contacts/#{contact.id}"} class="favorite-card">
+              <div class="contact-avatar">
+                <%= if contact.avatar do %>
+                  <img src={contact.avatar} alt={contact_name(contact)} />
+                <% else %>
+                  <div class="avatar-initials">
+                    {contact_initials(contact)}
+                  </div>
+                <% end %>
+              </div>
+              <div class="favorite-info">
+                <div class="contact-name">{contact_name(contact)}</div>
+              </div>
+            </.link>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    
+<!-- Search Section -->
+    <div class="search-container">
+      <form phx-change="search" phx-submit="search" class="search-form">
+        <div class="search-input-wrapper">
+          <input
+            type="text"
+            name="query"
+            value={@search_query}
+            placeholder="Search contacts by name, email, location, or tags..."
+            class="search-input"
+            phx-debounce="300"
+            autocomplete="off"
+          />
+          <%= if @search_query && @search_query != "" do %>
+            <button type="button" phx-click="clear-search" class="clear-search-btn">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          <% end %>
+        </div>
+        <%= if @search_mode && @search_results do %>
+          <div class="search-results-info">
+            {length(@search_results)} results found
+          </div>
+        <% end %>
+      </form>
+    </div>
+    
+<!-- Contacts List -->
+    <div class="admin-main">
+      <div class="contacts-list" id="contacts-list-container" phx-hook="ContactAnimations">
+        <%= if @contacts == [] && @favorites == [] do %>
+          <div class="empty-state">
+            <p>No contacts yet</p>
+            <p class="text-muted">Import or add contacts to get started</p>
+          </div>
+        <% else %>
+          <%= for {contact, index} <- Enum.with_index(@contacts) do %>
+            <.link
+              navigate={~p"/contacts/#{contact.id}"}
+              class="contact-row"
+              data-contact-id={contact.id}
+              data-contact-index={index}
+            >
+              <div class="contact-avatar">
+                <%= if contact.avatar do %>
+                  <img src={contact.avatar} alt={contact_name(contact)} />
+                <% else %>
+                  <div class="avatar-initials">
+                    {contact_initials(contact)}
+                  </div>
+                <% end %>
+              </div>
+              <div class="contact-details">
+                <div class="contact-name">{contact_name(contact)}</div>
+                <div class="contact-meta">
+                  <%= if email = Map.get(contact, :email) do %>
+                    <span class="contact-email">{email}</span>
+                  <% end %>
+                  <%= if phone = Map.get(contact, :phone) do %>
+                    <span class="contact-phone">{phone}</span>
+                  <% end %>
+                </div>
+              </div>
+              <div class="contact-actions">
+                <%= if contact.ptt do %>
+                  {ptt_circle(%{ptt: contact.ptt})}
+                <% end %>
+              </div>
+            </.link>
+          <% end %>
+          
+<!-- Infinite Scroll Trigger -->
+          <%= if @has_more do %>
+            <div id="infinite-scroll-trigger" phx-hook="InfiniteScroll" data-loading={@loading} class="scroll-trigger">
+              <%= if @loading do %>
+                <div class="loading-spinner">
+                  <span>Loading more contacts...</span>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

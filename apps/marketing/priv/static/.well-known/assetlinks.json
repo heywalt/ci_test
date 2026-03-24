@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "ai.heywalt.heywalt",
+      "sha256_cert_fingerprints": [
+        "93:7C:AD:3C:84:EF:32:2F:D7:ED:95:D5:0E:95:BA:AC:8B:07:8B:68:5D:7A:61:05:65:71:82:EA:F3:B8:38:75"
+      ]
+    }
+  }
+]

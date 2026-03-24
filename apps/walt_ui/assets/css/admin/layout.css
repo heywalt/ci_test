@@ -1,0 +1,95 @@
+/*
+=========================================================================================
+  Admin Layout
+=========================================================================================
+*/
+
+.admin-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+}
+
+.admin-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-neutral-6);
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-neutral-12);
+    margin: 0;
+  }
+  
+  .admin-breadcrumb {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-neutral-9);
+    
+    a {
+      color: var(--color-brand-9);
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    
+    .separator {
+      color: var(--color-neutral-7);
+    }
+  }
+}
+
+.admin-main {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-grid {
+  display: grid;
+  gap: 2rem;
+  
+  &.cols-2 {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  &.cols-3 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  &.cols-4 {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+.admin-section {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-neutral-12);
+      margin: 0;
+    }
+  }
+}

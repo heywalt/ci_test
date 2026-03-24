@@ -1,0 +1,35 @@
+/*
+=========================================================================================
+  Admin Dashboard Page
+=========================================================================================
+*/
+
+.dashboard-page {
+  .dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .users-table-section {
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      
+      h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--color-neutral-12);
+        margin: 0;
+      }
+      
+      .table-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+    }
+  }
+}

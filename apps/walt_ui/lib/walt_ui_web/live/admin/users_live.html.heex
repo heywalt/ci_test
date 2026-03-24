@@ -1,0 +1,149 @@
+<section class="users-page" id="admin-users" phx-hook="CopyToClipboard">
+  <div class="admin-wrapper">
+    <div class="admin-header">
+      <h1>User Details</h1>
+      <div class="admin-breadcrumb">
+        <.link navigate={~p"/manage"}>Admin</.link>
+        <span class="separator">/</span>
+        <.link navigate={~p"/manage"}>Users</.link>
+        <span class="separator">/</span>
+        <span>{@user.first_name} {@user.last_name}</span>
+      </div>
+    </div>
+
+    <div class="admin-main">
+      <.admin_card class="user-detail">
+        <:header>
+          <h3>User Information</h3>
+        </:header>
+        <:body>
+          <div class="info-card">
+            <div class="info-row">
+              <div class="info-label">Name</div>
+              <div class="info-value">{@user.first_name} {@user.last_name}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Email</div>
+              <div class="info-value">{@user.email}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">User ID</div>
+              <div class="info-value">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-gray-500 font-mono">{@user.id}</span>
+                  <.copy_button text={@user.id} size="micro" />
+                </div>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Total Contacts</div>
+              <div class="info-value"><span class="badge badge-info">{length(@user.contacts)}</span></div>
+            </div>
+          </div>
+        </:body>
+      </.admin_card>
+      <div class="admin-section csv-upload-section">
+        <div class="section-header">
+          <h2>Import Contacts</h2>
+        </div>
+
+        <form phx-submit="save" phx-change="validate" class="admin-form">
+          <div class="file-upload">
+            <.live_file_input upload={@uploads.csv} />
+            <div
+              phx-drop-target={@uploads.csv.ref}
+              class={["upload-area", length(@uploads.csv.entries) > 0 && "has-files"]}
+            >
+              <%= if Enum.empty?(@uploads.csv.entries) do %>
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">
+                  <button
+                    type="button"
+                    onclick="document.querySelector('input[type=file]').click()"
+                    class="upload-button"
+                  >
+                    Choose CSV File
+                  </button>
+                  <p>or drag and drop here</p>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="file-list">
+              <%= for entry <- @uploads.csv.entries do %>
+                <div class="file-item">
+                  <div class="file-info">
+                    <span class="file-icon">📄</span>
+                    <span class="file-name">{entry.client_name}</span>
+                    <span class="file-size">({Float.round(entry.client_size / 1024.0, 2)} KB)</span>
+                  </div>
+                  <div class="file-actions">
+                    <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref}>✕</button>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style={"width: #{entry.progress}%"}></div>
+                </div>
+                <div class="progress-text">
+                  <span>{entry.progress}%</span>
+                  <span>Uploading...</span>
+                </div>
+                <%= for err <- upload_errors(@uploads.csv, entry) do %>
+                  <p class="form-error">{error_to_string(err)}</p>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <%= if !Enum.empty?(@uploads.csv.entries) do %>
+            <div class="form-actions">
+              <button type="submit" class="button">Process CSV</button>
+            </div>
+          <% end %>
+        </form>
+        <%= if @total_rows > 0 do %>
+          <div class="upload-progress">
+            <h3>Processing Progress</h3>
+            <div class="progress-bar">
+              <div class="progress-fill" style={"width: #{(@progress / @total_rows * 100) |> Float.round(2)}%"}></div>
+            </div>
+            <div class="progress-info">
+              <span>Processed {@progress} of {@total_rows - 1} rows</span>
+              <%= if @completed do %>
+                <span class="complete-badge">✓ Complete!</span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="admin-section contacts-table-section">
+        <div class="section-header">
+          <h2>Contacts</h2>
+          <span class="contact-count">{length(@user.contacts)}</span>
+        </div>
+
+        <.admin_table rows={@user.contacts} striped={true} compact={true}>
+          <:col :let={contact} label="ID">
+            <span class="text-xs text-gray-500">{contact.id}</span>
+          </:col>
+          <:col :let={contact} label="Name">
+            <.link navigate={~p"/manage/contacts/#{contact.id}"} class="font-medium">
+              {contact.first_name} {contact.last_name}
+            </.link>
+          </:col>
+          <:col :let={contact} label="Move Score">
+            <span class="badge badge-info">{contact.ptt}</span>
+          </:col>
+          <:col :let={contact} label="Created">
+            {Calendar.strftime(contact.inserted_at, "%b %d, %Y")}
+          </:col>
+          <:action :let={contact}>
+            <.link navigate={~p"/manage/contacts/#{contact.id}"} class="button button--xs">
+              View
+            </.link>
+          </:action>
+        </.admin_table>
+      </div>
+    </div>
+  </div>
+</section>

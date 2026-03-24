@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -e
+
+tar -czf apps.mix.tar.gz apps/*/mix.exs
+docker compose --env-file .env --env-file .env.secrets --profile setup run --rm setup mix setup
+docker compose --env-file .env --env-file .env.secrets up -d app

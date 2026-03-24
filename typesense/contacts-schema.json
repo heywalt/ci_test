@@ -1,0 +1,71 @@
+{
+    "created_at": 1727284353,
+    "default_sorting_field": "ptt",
+    "enable_nested_fields": false,
+    "fields": [
+        {
+            "facet": false,
+            "index": true,
+            "infix": false,
+            "locale": "",
+            "name": "first_name",
+            "optional": true,
+            "sort": false,
+            "stem": false,
+            "store": true,
+            "type": "string"
+        },
+        {
+            "facet": false,
+            "index": true,
+            "infix": false,
+            "locale": "",
+            "name": "last_name",
+            "optional": true,
+            "sort": false,
+            "stem": false,
+            "store": true,
+            "type": "string"
+        },
+        {
+            "facet": false,
+            "index": true,
+            "infix": false,
+            "locale": "",
+            "name": "email",
+            "optional": true,
+            "sort": false,
+            "stem": false,
+            "store": true,
+            "type": "string"
+        },
+        {
+            "facet": false,
+            "index": true,
+            "infix": false,
+            "locale": "",
+            "name": "ptt",
+            "optional": false,
+            "sort": true,
+            "stem": false,
+            "store": true,
+            "type": "int32"
+        },
+        {
+            "facet": false,
+            "index": true,
+            "infix": false,
+            "locale": "",
+            "name": "user_id",
+            "optional": false,
+            "sort": false,
+            "stem": false,
+            "store": true,
+            "type": "string"
+        }
+    ],
+    "name": "contacts",
+    "num_documents": 51004,
+    "symbols_to_index": [],
+    "token_separators": []
+}

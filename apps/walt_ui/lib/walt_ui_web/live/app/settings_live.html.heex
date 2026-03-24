@@ -1,0 +1,224 @@
+<section class="dashboard-page">
+  <div class="admin-wrapper">
+    <div class="admin-header">
+      <h1>Settings</h1>
+      <div class="admin-breadcrumb">
+        <span>Manage your account and preferences</span>
+      </div>
+    </div>
+
+    <div class="admin-main">
+      <div class="admin-grid cols-2">
+        <.admin_card class="stats-card">
+          <:body>
+            <div class="stat-value">{length(@contacts)}</div>
+            <div class="stat-label">Total Contacts</div>
+          </:body>
+        </.admin_card>
+
+        <%= if false do %>
+          <.admin_card class="stats-card">
+            <:body>
+              <div class="stat-value">
+                {if @subscription, do: "Active", else: "Inactive"}
+              </div>
+              <div class="stat-label">Subscription Status</div>
+            </:body>
+          </.admin_card>
+        <% end %>
+      </div>
+
+      <.admin_card>
+        <:header>
+          <h3>Contact Upload</h3>
+        </:header>
+        <:body>
+          <div class="admin-section csv-upload-section">
+            <div class="section-header">
+              <h2>Import Contacts</h2>
+            </div>
+
+            <div style="background-color: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+              <p style="font-weight: 600; margin: 0 0 8px 0;">CSV Requirements</p>
+              <p style="margin: 0 0 8px 0;">
+                <strong>Required columns:</strong> first_name, last_name, email, phone, tags
+              </p>
+              <p style="margin: 0 0 8px 0;">
+                Only these columns will be imported. Any other columns in your CSV will be ignored.
+              </p>
+              <p style="margin: 0; color: #64748b; font-size: 0.875rem;">
+                <strong>Note:</strong> Column headers must match exactly (e.g., "first_name" not "full_name").
+                Common variations like "First Name" or "Phone Number" are accepted.
+              </p>
+            </div>
+
+            <form phx-submit="save" phx-change="validate" class="admin-form">
+              <div class="file-upload">
+                <.live_file_input upload={@uploads.csv} />
+                <%= if Enum.empty?(@uploads.csv.entries) do %>
+                  <div phx-drop-target={@uploads.csv.ref} class="upload-area">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">
+                      <button
+                        type="button"
+                        onclick="document.querySelector('input[type=file]').click()"
+                        class="upload-button"
+                      >
+                        Choose CSV File
+                      </button>
+                      <p>or drag and drop here</p>
+                    </div>
+                  </div>
+                <% end %>
+
+                <div class="file-list">
+                  <%= for entry <- @uploads.csv.entries do %>
+                    <div class="file-item">
+                      <div class="file-info">
+                        <span class="file-icon">📄</span>
+                        <span class="file-name">{entry.client_name}</span>
+                        <span class="file-size">({Float.round(entry.client_size / 1024.0, 2)} KB)</span>
+                      </div>
+                      <div class="file-actions">
+                        <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref}>✕</button>
+                      </div>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style={"width: #{entry.progress}%"}></div>
+                    </div>
+                    <div class="progress-text">
+                      <span>{entry.progress}%</span>
+                      <span>{if entry.progress == 100, do: "Ready to process", else: "Uploading..."}</span>
+                    </div>
+                    <%= for err <- upload_errors(@uploads.csv, entry) do %>
+                      <p class="form-error">{error_to_string(err)}</p>
+                    <% end %>
+                  <% end %>
+                </div>
+
+                <%= if @csv_errors != [] do %>
+                  <div style="background-color: #fee2e2; border: 1px solid #ef4444; border-radius: 8px; padding: 16px; margin-top: 16px;">
+                    <p style="color: #dc2626; font-weight: 600; margin: 0 0 8px 0;">CSV Validation Failed</p>
+                    <%= for error <- @csv_errors do %>
+                      <p style="color: #b91c1c; margin: 4px 0;">{error}</p>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+
+              <%= if Enum.any?(@uploads.csv.entries, & &1.progress == 100) do %>
+                <div class="form-actions">
+                  <button type="submit" class="button" phx-disable-with="Processing...">
+                    Process CSV
+                  </button>
+                </div>
+              <% end %>
+            </form>
+            <%= cond do %>
+              <% @total_rows > 0 -> %>
+                <div class="upload-progress">
+                  <h3>Processing Progress</h3>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style={"width: #{(@progress / @total_rows * 100) |> Float.round(2)}%"}>
+                    </div>
+                  </div>
+                  <div class="progress-info">
+                    <span>Processed {@progress} of {@total_rows} rows</span>
+                    <%= if @completed do %>
+                      <span class="complete-badge">✓ Complete!</span>
+                    <% end %>
+                  </div>
+                </div>
+              <% @processing -> %>
+                <div class="upload-progress">
+                  <h3>Processing...</h3>
+                  <p>Reading CSV file...</p>
+                </div>
+              <% true -> %>
+            <% end %>
+          </div>
+        </:body>
+      </.admin_card>
+
+      <%= if false do %>
+        <.admin_card>
+          <:header>
+            <h3>Google Account Integration</h3>
+          </:header>
+          <:body>
+            <p class="mb-4">Connect your Google account to sync emails and calendar events with your contacts.</p>
+            <.link href={~p"/auth/google/"} class="button">
+              <span>🔗</span> Sign in with Google
+            </.link>
+          </:body>
+        </.admin_card>
+
+        <.admin_card>
+          <:header>
+            <h3>Subscription Management</h3>
+          </:header>
+          <:body>
+            <%= if is_nil(@subscription) do %>
+              <div class="mb-4">
+                <p class="mb-4">Subscribe to unlock premium features and get the most out of Walt.</p>
+                <script async src="https://js.stripe.com/v3/buy-button.js">
+                </script>
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1QL7uD2LXj7UFBVoeP5n0tWG"
+                  publishable-key="pk_test_51PbkP92LXj7UFBVo590ONmQUtuLRb8sAPuII3jGxXqifM0j9EtMWRWLu4s0rEX5UwwkVIe6UslgOwHPhrPuhgX7y00FwYRySRz"
+                  customer-email={@current_user.email}
+                >
+                </stripe-buy-button>
+              </div>
+            <% else %>
+              <div class="info-card">
+                <div class="info-row">
+                  <div class="info-label">Status</div>
+                  <div class="info-value">
+                    <span class="badge badge-success">Active Subscription</span>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Store</div>
+                  <div class="info-value">{String.capitalize(to_string(@subscription.store))}</div>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <%= case @subscription.store do %>
+                  <% :apple -> %>
+                    <p class="mb-4">
+                      Your subscription is managed through the App Store. To make changes, please visit the App Store on your device.
+                    </p>
+                    <div class="form-actions">
+                      <button disabled class="button button--white">
+                        <span>🍎</span> Managed via App Store
+                      </button>
+                    </div>
+                  <% :google -> %>
+                    <p class="mb-4">
+                      Your subscription is managed through Google Play. To make changes, please visit the Play Store on your device.
+                    </p>
+                    <div class="form-actions">
+                      <button disabled class="button button--white">
+                        <span>📱</span> Managed via Play Store
+                      </button>
+                    </div>
+                  <% :stripe -> %>
+                    <p class="mb-4">
+                      Your subscription is managed through Stripe. Click below to access the billing portal where you can update payment information, view billing history, or cancel your subscription.
+                    </p>
+                    <div class="form-actions">
+                      <.button phx-click="manage-subscription">
+                        <span>⚙️</span> Manage Subscription
+                      </.button>
+                    </div>
+                <% end %>
+              </div>
+            <% end %>
+          </:body>
+        </.admin_card>
+      <% end %>
+    </div>
+  </div>
+</section>

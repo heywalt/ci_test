@@ -1,0 +1,11 @@
+body {
+
+  .live,
+  &:not(:has(.live)) {
+    display: grid;
+    grid-template-columns:
+      [window-start] var(--grid-gap) [content-start] 1fr [grid-start] var(--grid-template-columns) [grid-end] 1fr [content-end] var(--grid-gap) [window-end];
+    grid-template-rows:
+      [window-start header-start] auto [header-end main-start] 1fr [main-end footer-start] auto [footer-end window-end];
+  }
+}

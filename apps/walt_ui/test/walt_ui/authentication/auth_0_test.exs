@@ -1,0 +1,18 @@
+defmodule WaltUi.Authentication.Auth0Test do
+  use Repo.DataCase
+
+  alias WaltUi.Authentication.Auth0
+
+  describe "JWT validation" do
+    @expired_jwt "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkJZblBaWDExTnlaNUd2UVVXU1VjLSJ9.eyJnaXZlbl9uYW1lIjoiU2VhbiIsImZhbWlseV9uYW1lIjoiTWFja2luIiwibmlja25hbWUiOiJzbWFja2luMjgiLCJuYW1lIjoiU2VhbiBNYWNraW4iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSkp2M2NoNDNXRDVXdF9QWEQza3hjRlVHSktDeXNLOVU3TFl1eUU0MDVWbF9JZ0VsVUc9czk2LWMiLCJ1cGRhdGVkX2F0IjoiMjAyNC0wNi0wN1QxODozNzowMy4yNTRaIiwiZW1haWwiOiJzbWFja2luMjhAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImlzcyI6Imh0dHBzOi8vZGV2LXZxNmh0bWtxMXp4bTJsZnYudXMuYXV0aDAuY29tLyIsImF1ZCI6IkFIZkY2NG5XUWJISmhORkN2Rk55UG1kTWVXRHpLNXh3IiwiaWF0IjoxNzE4OTgzODcxLCJleHAiOjE3MTkwMTk4NzEsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTEyNzk5NzMwMTAxMDg0NTIyNzA3Iiwic2lkIjoiX21RTHFDMWNaei1uR2k4Mk1vN2NQazNUaXZJN0NfSzIifQ.wv1jEcUGteUO18qFsOnOVR8fhYZtcg72UokNrPNUfMnjZzFFZtx2OjIl2qLKpTMyq1RSCFDJVkVGzyRdfuffRlb1FFV4Og7QYbdSBWKL-5x_D31ciwE09Qkh9mUdrana-4e6f-xb8CX9A6Z6JDpK2uDbqO58X9VPeJ2Qy2BjACpbiq-tEDHfZuIvFYi21xu__N2tNZIp4xye0RFRVvX7DEny6DMNggrFy1TxCHBWxO6-9W7EDQWzoRAFIYVoncJlyfryz0J5f5NDqLooRZbjZFKin5Fr68i21lQLD5Bk6r7vgjrlYzScnRdlSodNCxnipCopl-I3Bfrk3Zg6ddJhrA"
+    @unexpired_date DateTime.from_unix!(1_718_019_871)
+
+    test "jwt_expired? returns true for expired jwts" do
+      assert Auth0.jwt_expired?(@expired_jwt) == true
+    end
+
+    test "jwt_expired? returns false for unexpired jwts" do
+      assert Auth0.jwt_expired?(@expired_jwt, @unexpired_date) == false
+    end
+  end
+end

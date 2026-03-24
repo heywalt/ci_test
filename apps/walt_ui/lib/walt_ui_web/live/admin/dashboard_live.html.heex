@@ -1,0 +1,178 @@
+<section class="dashboard-page" id="admin-dashboard" phx-hook="CopyToClipboard">
+  <div class="admin-wrapper">
+    <div class="admin-header">
+      <h1>Admin Dashboard</h1>
+      <div class="admin-breadcrumb">
+        <span>Admin</span>
+        <span class="separator">/</span>
+        <span>Users</span>
+      </div>
+    </div>
+
+    <div class="admin-main">
+      <div class="admin-section users-table-section">
+        <div class="table-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <h2>Registered Users</h2>
+          <span style="color: #6b7280; font-size: 0.875rem;">
+            Showing {length(@users)} of {@total_entries} users
+          </span>
+        </div>
+        
+<!-- Search Bar -->
+        <div class="search-container" style="margin-bottom: 1.5rem;">
+          <form phx-change="search" phx-submit="search_submit" style="position: relative;">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <div style="position: relative; flex: 1; max-width: 500px;">
+                <input
+                  type="text"
+                  name="query"
+                  value={@search_query}
+                  placeholder="Search by name, email, or phone..."
+                  autocomplete="off"
+                  phx-debounce="150"
+                  style="width: 100%; padding: 0.5rem 2.5rem 0.5rem 1rem; border: 1px solid #e5e7eb; border-radius: 0.375rem; font-size: 0.875rem;"
+                />
+                <%= if @loading do %>
+                  <span style="position: absolute; right: 2.5rem; top: 50%; transform: translateY(-50%); color: #6b7280;">
+                    <svg
+                      class="animate-spin"
+                      style="width: 1rem; height: 1rem;"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle style="opacity: 0.25;" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                      </circle>
+                      <path
+                        style="opacity: 0.75;"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      >
+                      </path>
+                    </svg>
+                  </span>
+                <% end %>
+                <%= if @search_query != "" do %>
+                  <button
+                    type="button"
+                    phx-click="clear_search"
+                    style="position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: #6b7280; cursor: pointer; padding: 0.25rem;"
+                    title="Clear search"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      style="width: 1.25rem; height: 1.25rem;"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                <% end %>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="admin-table striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th class="sortable" phx-click="sort" phx-value-by="name">
+                  Name
+                  <%= if @sort_by == :name do %>
+                    <span class="sort-icon">{if @sort_order == :asc, do: "↑", else: "↓"}</span>
+                  <% end %>
+                </th>
+                <th class="sortable" phx-click="sort" phx-value-by="email">
+                  Email
+                  <%= if @sort_by == :email do %>
+                    <span class="sort-icon">{if @sort_order == :asc, do: "↑", else: "↓"}</span>
+                  <% end %>
+                </th>
+                <th class="sortable" phx-click="sort" phx-value-by="contact_count">
+                  Contacts
+                  <%= if @sort_by == :contact_count do %>
+                    <span class="sort-icon">{if @sort_order == :asc, do: "↑", else: "↓"}</span>
+                  <% end %>
+                </th>
+                <th class="sortable" phx-click="sort" phx-value-by="inserted_at">
+                  Signed Up
+                  <%= if @sort_by == :inserted_at do %>
+                    <span class="sort-icon">{if @sort_order == :asc, do: "↑", else: "↓"}</span>
+                  <% end %>
+                </th>
+                <th class="actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= if @users == [] do %>
+                <tr>
+                  <td colspan="6" style="text-align: center; padding: 3rem 1rem; color: #6b7280;">
+                    <%= if @search_query != "" do %>
+                      <div>
+                        <div style="font-size: 1.125rem; margin-bottom: 0.5rem;">No users found</div>
+                        <div style="font-size: 0.875rem;">
+                          No users match "{@search_query}". Try a different search term.
+                        </div>
+                      </div>
+                    <% else %>
+                      <div>No users registered yet.</div>
+                    <% end %>
+                  </td>
+                </tr>
+              <% else %>
+                <%= for user <- @users do %>
+                  <tr
+                    class="clickable-row"
+                    style="cursor: pointer;"
+                    phx-click={JS.navigate(~p"/manage/users/#{user.id}")}
+                  >
+                    <td>
+                      <div class="flex items-center gap-1">
+                        <span class="text-xs text-gray-500 font-mono">{user.id}</span>
+                        <.copy_button text={user.id} size="micro" />
+                      </div>
+                    </td>
+                    <td>
+                      <span class="font-medium">{user.first_name} {user.last_name}</span>
+                    </td>
+                    <td>
+                      <span>{user.email}</span>
+                    </td>
+                    <td>
+                      <span class="badge badge-info">{user.contact_count}</span>
+                    </td>
+                    <td>
+                      {Calendar.strftime(user.inserted_at, "%b %d, %Y")}
+                    </td>
+                    <td class="actions">
+                      <.link navigate={~p"/manage/users/#{user.id}"} class="button button--sm">
+                        View
+                      </.link>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        
+<!-- Infinite Scroll Trigger -->
+        <%= if @has_more do %>
+          <div
+            id="infinite-scroll-trigger"
+            phx-hook="InfiniteScroll"
+            data-page={@page}
+            style="padding: 2rem; text-align: center; color: #6b7280;"
+          >
+            <span>Loading more users...</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

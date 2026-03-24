@@ -1,0 +1,10 @@
+.footer {
+  display: grid;
+  grid-column: window-start / window-end;
+  grid-row: footer-start / footer-end;
+  grid-template-columns: subgrid;
+
+  section {
+    grid-column: grid-start / grid-end;
+  }
+}

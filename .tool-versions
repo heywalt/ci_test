@@ -1,0 +1,4 @@
+direnv 2.35.0
+erlang 26.2.5
+elixir 1.18.4-otp-26
+terraform 1.10.3

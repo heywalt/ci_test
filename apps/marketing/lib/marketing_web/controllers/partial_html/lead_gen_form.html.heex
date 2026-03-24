@@ -1,0 +1,65 @@
+<div class="max-w-xl mx-auto mt-12 w-full" x-data="{ phone: false }">
+  <div class="flex ml-5 mb-1 gap-2">
+    <button class="cursor-pointer" x-bind:class="!phone && 'text-brand-9 font-medium'" @click="phone = false">
+      Email
+    </button>
+    <span class="text-neutral-7">|</span>
+    <button class="cursor-pointer" x-bind:class="phone && 'text-brand-9 font-medium'" @click="phone = true">
+      Text
+    </button>
+  </div>
+  <form
+    action="https://heywalt.us17.list-manage.com/subscribe/post?u=b9ba77669e542816a20e9c7cf&amp;id=76d094d43e&amp;f_id=00e5c3e1f0"
+    method="post"
+    name="mc-embedded-subscribe-form"
+    target="_self"
+    x-show="!phone"
+  >
+    <fieldset>
+      <div class="flex gap-1 p-1 pl-4 bg-neutral-1 border-1 border-neutral-7 rounded-full">
+        <input
+          class="w-full grow outline-0 text-md font-medium"
+          type="email"
+          name="EMAIL"
+          placeholder="Your email address"
+          required
+        />
+        <input type="hidden" name="tags" value="1022" />
+        <button class="button !rounded-full" type="submit">Send download link</button>
+      </div>
+    </fieldset>
+    <div aria-hidden="true" style="position: absolute; left: -5000px;">
+      <input type="text" name="b_b9ba77669e542816a20e9c7cf_76d094d43e" tabindex="-1" value="" />
+    </div>
+  </form>
+  <form
+    action="https://heywalt.us17.list-manage.com/subscribe/post?u=b9ba77669e542816a20e9c7cf&amp;id=76d094d43e&amp;f_id=0090c3e1f0"
+    method="post"
+    name="mc-embedded-subscribe-form"
+    target="_self"
+    x-show="phone"
+  >
+    <fieldset>
+      <div class="flex gap-1 p-1 pl-4 bg-neutral-1 border-1 border-neutral-7 rounded-full">
+        <input
+          class="w-full grow outline-0 text-md font-medium"
+          type="text"
+          name="SMSPHONE"
+          inputmode="numeric"
+          pattern="[0-9]+"
+          placeholder="Your phone number"
+          required
+        />
+        <input type="hidden" name="mc-SMSPHONE-ack" value="true" />
+        <input type="hidden" name="tags" value="1023" />
+        <button class="button !rounded-full" type="submit">Send download link</button>
+      </div>
+    </fieldset>
+    <div aria-hidden="true" style="position: absolute; left: -5000px;">
+      <input type="text" name="b_b9ba77669e542816a20e9c7cf_76d094d43e" tabindex="-1" value="" />
+    </div>
+    <p class="text-sm italic text-center max-w-xl mx-auto mt-4">
+      By providing your phone number, you agree to receive communications from Amby. Message and data rates may apply. Text STOP to cancel.
+    </p>
+  </form>
+</div>

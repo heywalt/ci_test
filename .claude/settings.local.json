@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(rg:*)",
+      "Bash(grep:*)",
+      "Bash(mix format)",
+      "Bash(mix format:*)",
+      "mcp__memory__read_graph",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(mix test:*)",
+      "mcp__memory__add_observations",
+      "Bash(ls:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "mcp__memory__search_nodes"
+    ],
+    "deny": []
+  }
+}

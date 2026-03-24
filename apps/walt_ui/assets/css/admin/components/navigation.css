@@ -1,0 +1,178 @@
+/*
+=========================================================================================
+  Admin Navigation Component
+=========================================================================================
+*/
+
+.admin-nav {
+  background: white;
+  border-bottom: 1px solid var(--color-neutral-3);
+  margin-bottom: 2rem;
+  
+  .nav-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    
+    @media (max-width: 768px) {
+      padding: 0 1rem;
+    }
+  }
+  
+  .nav-menu {
+    display: flex;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    
+    .nav-item {
+      position: relative;
+      
+      .nav-link {
+        display: block;
+        padding: 1rem 1.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-neutral-11);
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        transition: all 0.15s ease;
+        
+        &:hover {
+          color: var(--color-brand-9);
+          background: var(--color-neutral-1);
+        }
+        
+        &.active {
+          color: var(--color-brand-9);
+          border-bottom-color: var(--color-brand-9);
+        }
+      }
+    }
+  }
+}
+
+/* Tabs Navigation */
+.admin-tabs {
+  border-bottom: 1px solid var(--color-neutral-3);
+  margin-bottom: 2rem;
+  
+  .tabs-list {
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    
+    .tab-item {
+      .tab-link {
+        display: block;
+        padding: 0.75rem 0;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-neutral-9);
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        transition: all 0.15s ease;
+        
+        &:hover {
+          color: var(--color-neutral-11);
+        }
+
+        &.active {
+          color: var(--color-brand-9);
+          border-bottom-color: var(--color-brand-9);
+        }
+      }
+    }
+  }
+}
+
+/* iPhone-style Tab Navigation */
+.tab-nav {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: 1px solid var(--color-neutral-3);
+
+  .tab-nav-container {
+    position: relative;
+    display: inline-flex;
+    background: var(--color-neutral-2);
+    border-radius: 50px;
+    padding: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    /* Animated highlight pill */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      height: calc(100% - 8px);
+      background: var(--color-brand-9);
+      border-radius: 50px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transform: translateX(0);
+    }
+
+    /* Calculate position for each tab */
+    &[data-active="0"]::before {
+      transform: translateX(0);
+    }
+
+    &[data-active="1"]::before {
+      transform: translateX(100%);
+    }
+
+    .tab-nav-item {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+
+      .tab-nav-link {
+        display: block;
+        padding: 10px 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-neutral-11);
+        text-decoration: none;
+        border-radius: 50px;
+        transition: color 0.3s ease;
+        white-space: nowrap;
+        text-align: center;
+        position: relative;
+
+        &:hover {
+          color: var(--color-brand-10);
+        }
+
+        &.active {
+          color: white;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .tab-nav-container {
+      width: 100%;
+      max-width: 300px;
+
+      .tab-nav-item {
+        .tab-nav-link {
+          padding: 8px 16px;
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}

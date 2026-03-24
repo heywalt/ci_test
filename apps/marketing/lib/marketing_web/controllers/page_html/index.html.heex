@@ -1,0 +1,372 @@
+<section id="hero" class="hero">
+  <div :if={!@conn.params["ct"]} class="content content-center mt-40 text-center">
+    <h1 id="landing-page-cta" class="text-5xl lg:text-6xl !text-neutral-1">Start closing more deals</h1>
+    <p class="mt-4 text-xl lg:text-2xl !text-neutral-2 max-w-3xl mx-auto">
+      Turn your contacts into closings. Discover the ready-to-move clients hiding in your network, all from the palm of your hand.
+    </p>
+    <div class="grid gap-4">
+      <div :if={@os != "iOS" && @os != "Android"}>
+        <div class="inline-flex items-center gap-6 my-8">
+          <img
+            class="aspect-square w-20 p-1 bg-neutral-1 border-1 border-neutral-6 rounded-lg shadow-xs"
+            src={~p"/images/marketing/app-download-qr-code.svg"}
+            alt="App Download QR Code"
+          />
+          <div class="text-left">
+            <p class="text-xl font-medium text-neutral-1">Find your next client, today</p>
+            <p class="text-neutral-2">Scan the QR code to download the app</p>
+          </div>
+        </div>
+      </div>
+      <.link :if={@os == "iOS"} href="https://apps.apple.com/us/app/hey-walt/id6593690873">
+        <img
+          class="inline-block mt-8 h-12"
+          src={~p"/images/vendor/apple/app-store-badge.svg"}
+          alt="Download on App Store"
+        />
+      </.link>
+      <.link :if={@os == "Android"} href="https://play.google.com/store/apps/details?id=ai.heywalt.heywalt">
+        <img
+          class="inline-block mt-8 h-12"
+          src={~p"/images/vendor/google/play-store-badge.svg"}
+          alt="Download on Play Store"
+        />
+      </.link>
+    </div>
+  </div>
+  <div :if={@conn.params["ct"]} class="content content-center mb-20 text-center">
+    <h1 class="text-5xl lg:text-6xl !text-neutral-1">You're in!</h1>
+    <p class="mt-4 text-xl lg:text-2xl !text-neutral-2">
+      Click the link on your phone to download the app
+    </p>
+  </div>
+</section>
+<section id="features" class="py-24 bg-neutral-1 border-y-1 border-neutral-6">
+  <div class="content">
+    <h3 class="!mb-6 text-4xl text-center">A relationship tool you'll actually want to use</h3>
+    <div class="mt-16 grid grid-cols-1 gap-16 lg:grid-cols-3 auto-rows-min">
+      <div>
+        <div class="flex items-start gap-x-4">
+          <.icon name="address-book" style="regular" class="text-3xl mb-4 text-brand-9" />
+          <div>
+            <h3 class="text-2xl">Uncover hidden opportunities</h3>
+            <p class="mt-2">
+              Our Move Score&trade; identifies your next opportunities before they raise their hand, helping you reach out at exactly the right moment.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="flex items-start gap-x-4">
+          <.icon name="file-contract" style="regular" class="text-3xl mb-4 text-brand-9" />
+          <div>
+            <h3 class="text-2xl">Close deals with confidence</h3>
+            <p class="mt-2">
+              Go beyond basic contact storage to understand relationship strength, identify key influencers, and nurture your most valuable connections.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="flex items-start gap-x-4">
+          <.icon name="list-check" style="regular" class="text-3xl mb-4 text-brand-9" />
+          <div>
+            <h3 class="text-2xl">Prioritize what matters most</h3>
+            <p class="mt-2">
+              Track dates, draft follow-ups, take notes, and get timely reminders so you can focus on making genuine connections that grow your business.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="testimonials" class="py-24 bg-neutral-3 border-y-1 border-neutral-6">
+  <div class="content">
+    <h3 class="!mb-12 text-4xl text-center">What customers are saying</h3>
+    <div class="space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="p-6 bg-neutral-1 rounded-lg shadow-xs border-1 border-neutral-6 flex flex-col justify-between">
+          <p class="text-lg mb-4">"In less than a minute from downloading the app, I found a buyer!"</p>
+          <p class="text-sm text-brand-9 font-medium text-right">— Marissa, Texas</p>
+        </div>
+        <div class="p-6 bg-neutral-1 rounded-lg shadow-xs border-1 border-neutral-6 flex flex-col justify-between">
+          <p class="text-lg mb-4">"Wow! This Move Score is amazing! Found 2 active clients in minutes"</p>
+          <p class="text-sm text-brand-9 font-medium text-right">— Chase, Arizona</p>
+        </div>
+        <div class="p-6 bg-neutral-1 rounded-lg shadow-xs border-1 border-neutral-6 flex flex-col justify-between">
+          <p class="text-lg mb-4">
+            "Amazing! Amby quickly identified many of my contacts that were ready to buy and one of those contacts has already closed!"
+          </p>
+          <p class="text-sm text-brand-9 font-medium text-right">— Billy, California</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:max-w-2xl lg:mx-auto">
+        <div class="p-6 bg-neutral-1 rounded-lg shadow-xs border-1 border-neutral-6 flex flex-col justify-between">
+          <p class="text-lg mb-4">"With Amby, I will never have to buy leads again!"</p>
+          <p class="text-sm text-brand-9 font-medium text-right">— Brad, Texas</p>
+        </div>
+        <div class="p-6 bg-neutral-1 rounded-lg shadow-xs border-1 border-neutral-6 flex flex-col justify-between">
+          <p class="text-lg mb-4">"Amby is a wizard!"</p>
+          <p class="text-sm text-brand-9 font-medium text-right">— Lori, Nevada</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="pricing" class="py-24 bg-neutral-1 border-neutral-6" x-data="{ monthly: true }">
+  <div class="content">
+    <h3 class="text-4xl text-center">See your network's potential &ndash; no strings attached</h3>
+    <div class="flex justify-center mt-6">
+      <div class="flex border-2 border-brand-9 py-0.5 px-0.5 rounded-full">
+        <button
+          class="px-4 py-1.5 font-medium rounded-full text-brand-9 cursor-pointer"
+          x-bind:class="monthly && '!bg-brand-9 !text-brand-1'"
+          @click="monthly = true"
+        >
+          Monthly
+        </button>
+        <button
+          class="px-4 py-1.5 font-medium rounded-full text-brand-9 cursor-pointer"
+          x-bind:class="!monthly && '!bg-brand-9 !text-brand-1'"
+          @click="monthly = false"
+        >
+          Yearly
+        </button>
+      </div>
+    </div>
+    <div class="mx-auto my-12 grid grid-cols-1 md:grid-cols-3 items-stretch gap-y-4 sm:gap-y-0">
+      <div class="relative sm:my-8 p-10 overflow-hidden rounded-2xl bg-neutral-1 shadow-xs border-1 sm:border-r-0 border-neutral-6 sm:rounded-tr-none sm:rounded-br-none">
+        <div>
+          <div class="flex justify-between items-center gap-2 text-lg font-medium text-brand-11">Free</div>
+          <%!-- <p class="mb-4 pb-4 border-b-1 border-neutral-6">Best for...</p> --%>
+          <p class="mt-2 flex items-baseline gap-x-1">
+            <span class="text-5xl font-bold text-neutral-12">$0</span>
+            <span class="text-base" x-text="monthly ? '/ month' : '/ year'"></span>
+          </p>
+        </div>
+        <.link class="button button--wide my-6" href={~p"/download"}>Get started today</.link>
+        <ul role="list" class="space-y-2">
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              <strong>150</strong> enriched contacts
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Transform your network into meaningful opportunities
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Weekly Move Score&trade; updates and history
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Import contacts from your device
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Just-in-time opportunity notifications
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Basic customer support
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="relative p-10 overflow-hidden rounded-2xl bg-neutral-1 shadow-xs sm:shadow-xl border-1 border-neutral-6 z-10">
+        <div>
+          <div class="flex justify-between items-center gap-2 text-lg font-medium text-brand-11">
+            Premium<span class="py-0.5 px-2 bg-brand-4 rounded-lg text-sm text-brand-11">Most Popular</span>
+          </div>
+          <%!-- <p class="mb-4 pb-4 border-b-1 border-neutral-6">Best for...</p> --%>
+          <p class="mt-2 flex items-baseline gap-x-1">
+            <span class="text-5xl font-bold text-neutral-12" x-text="monthly ? '$99' : '$999'"></span>
+            <span class="text-base" x-text="monthly ? '/ month' : '/ year'"></span>
+          </p>
+        </div>
+        <.link class="button button--wide my-6" href={~p"/download"}>Try it free for 14 days</.link>
+        <ul role="list" class="space-y-2">
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              <strong>Unlimited</strong> enriched contacts
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Transform your network into meaningful opportunities
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Weekly Move Score&trade; updates and history
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Import contacts from your device, email, calendar, csv, and more
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Just-in-time opportunity notifications
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Premium customer support
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="relative sm:my-8 p-10 overflow-hidden rounded-2xl bg-neutral-1 shadow-xs border-1 sm:border-l-0 border-neutral-6 sm:rounded-tl-none sm:rounded-bl-none">
+        <div>
+          <div class="flex justify-between items-center gap-2 text-lg font-medium text-brand-11">Enterprise</div>
+          <%!-- <p class="mb-4 pb-4 border-b-1 border-neutral-6">Best for...</p> --%>
+          <p class="mt-2 flex items-baseline gap-x-1">
+            <span class="text-5xl font-bold text-neutral-12">Custom</span>
+          </p>
+        </div>
+        <.link class="button button--wide my-6" href="mailto:sales@heywalt.ai">Contact sales</.link>
+        <ul role="list" class="space-y-2">
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Everything in <strong>Premium</strong>
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              White glove onboarding and live training
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Dedicated account manager
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Priority customer support with SLA
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Early access to new features
+            </span>
+          </li>
+          <li class="flex gap-x-2">
+            <.icon name="circle-check" class="py-[3px] text-brand-9" />
+            <span>
+              Priority feature requests
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex justify-center items-center gap-6 my-12">
+      <img
+        class="aspect-square w-20 p-1 bg-neutral-1 border-1 border-neutral-6 rounded-lg shadow-xs"
+        src={~p"/images/marketing/app-download-qr-code.svg"}
+        alt="App Download QR Code"
+      />
+      <div class="text-left">
+        <p class="text-xl font-semibold text-neutral-12">Find your next client, today</p>
+        <p>Scan the QR code to download the app</p>
+      </div>
+    </div>
+    <MarketingWeb.PartialHTML.lead_gen_form />
+  </div>
+</section>
+<section id="faqs" class="py-24 bg-neutral-1 border-t-1 border-neutral-6">
+  <div class="content justify-center">
+    <h3 class="text-4xl text-center">Frequently asked questions</h3>
+    <p class="text-xl text-center">
+      If you have anything else you want to ask, <.link href="mailto:support@heywalt.ai">reach out to us</.link>.
+    </p>
+    <ul class="faqs max-w-3xl m-auto mt-12" role="list">
+      <li class="faq">
+        <details>
+          <summary class="text-lg cursor-pointer">
+            What makes Amby different from CRMs?
+          </summary>
+          <p class="mt-2 text-lg">
+            Unlike traditional contact platforms, Amby is a true Relationship Intelligence Platform that helps you strengthen connections with genuine rapport not just manage lists. Our platform surfaces meaningful opportunities within your network, empowering you to focus on the right contacts at the right time – transforming natural rapport into real results.
+          </p>
+        </details>
+      </li>
+      <li class="faq">
+        <details>
+          <summary class="text-lg cursor-pointer">
+            What does the Move Score&trade; mean?
+          </summary>
+          <p class="mt-2 text-lg">
+            The Move Score&trade; reveals which contacts in your network are ready for their next move. By analyzing public data and digital signals &ndash; from property searches to life events &ndash; this intelligent indicator helps you identify who might be preparing to buy or sell in the next 2-6 months. Think of it as your relationship radar, helping you reach out at just the right moment.
+          </p>
+          <p class="mt-2 text-lg">
+            While our Move Score&trade; offers valuable insights, market conditions and personal circumstances can influence timing. Use it as one of many tools to strengthen your relationships and deliver value when it matters most.
+          </p>
+        </details>
+      </li>
+      <li class="faq">
+        <details>
+          <summary class="text-lg cursor-pointer">
+            How does Amby make managing relationships easier?
+          </summary>
+          <p class="mt-2 text-lg">
+            We make it simple to nurture genuine connections that fuel your success. Amby's relationship intelligence helps you focus on the right contacts at the right time, uncover ready-to-move opportunities in your network, and deliver the personal touch that sets you apart. The result? More meaningful relationships that naturally lead to more closings.
+          </p>
+        </details>
+      </li>
+      <li class="faq">
+        <details>
+          <summary class="text-lg cursor-pointer">How does Amby protect my data?</summary>
+          <p class="mt-2 text-lg">
+            Trust is fundamental to every relationship &ndash; including ours with you. That's why Amby implements rigorous security measures to protect your valuable network. We maintain strict data privacy standards and enterprise-level security protocols, ensuring your professional relationships and contact information remain secure and confidential. Your privacy is our priority, empowering you to focus on what matters most: strengthening the connections that drive your success.
+          </p>
+        </details>
+      </li>
+      <li class="faq">
+        <details>
+          <summary class="text-lg cursor-pointer">
+            What happens to my existing contact data?
+          </summary>
+          <p class="mt-2 text-lg">
+            Your valuable network transitions effortlessly into Amby, where it becomes even more powerful. We preserve all your important contact information while adding relationship intelligence that helps you identify ready-to-move opportunities. From day one, you'll discover new ways to strengthen connections and deliver personal attention to the right contacts at the right time.
+          </p>
+        </details>
+      </li>
+      <li class="faq">
+        <details>
+          <summary class="text-lg cursor-pointer">
+            Does Amby integrate with my other tools?
+          </summary>
+          <p class="mt-2 text-lg">
+            Amby seamlessly connects with your essential professional tools, ensuring you can strengthen relationships without disrupting your workflow. Our Relationship Intelligence Platform works smoothly alongside your existing systems, empowering you to deliver value to your contacts more efficiently than ever.
+          </p>
+        </details>
+      </li>
+    </ul>
+  </div>
+</section>

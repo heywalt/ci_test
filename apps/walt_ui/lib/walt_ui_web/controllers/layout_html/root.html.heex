@@ -1,0 +1,16 @@
+<!doctype html>
+<html class="no-js" lang={assigns[:language] || "en"}>
+  <head>
+    <WaltUiWeb.Shared.PartialHTML.metadata meta_tags={@meta_tags} />
+    <WaltUiWeb.Shared.PartialHTML.preconnections />
+    <WaltUiWeb.Shared.PartialHTML.fonts />
+    <WaltUiWeb.Shared.PartialHTML.styles />
+    <WaltUiWeb.Shared.PartialHTML.scripts />
+    <WaltUiWeb.Shared.PartialHTML.manifest />
+    <WaltUiWeb.Shared.PartialHTML.icons />
+    <WaltUiWeb.Shared.PartialHTML.open_graph og_tags={@og_tags} />
+  </head>
+  <body>
+    {@inner_content}
+  </body>
+</html>

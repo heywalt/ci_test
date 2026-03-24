@@ -1,0 +1,118 @@
+<div class="content py-16">
+  <header class="flex flex-col justify-center pb-8 text-center">
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 mb-12">
+      <img src={~p"/images/vendor/skyslope/logo.svg"} alt="SkySlope" class="h-10 sm:h-12" />
+      <.icon class="text-xl" name="plus" style="solid" />
+      <img src={~p"/images/brand/amby-logo.svg"} alt="Amby" class="h-10 sm:h-12" />
+    </div>
+    <h1 class="text-5xl lg:text-6xl">Start closing more deals</h1>
+    <p class="mt-4 text-xl lg:text-2xl max-w-3xl mx-auto">
+      Turn your contacts into closings. Discover the ready-to-move clients hiding in your network, all from the palm of your hand.
+    </p>
+    <p class="mt-4 mb-12 text-xl lg:text-2xl max-w-3xl mx-auto">
+      Try Amby free for 30 days, then get 50% off for your first 6 months using promo code <strong>SKYSLOPE</strong>.
+    </p>
+    <div class="grid gap-4">
+      <div :if={@os != "iOS" && @os != "Android"}>
+        <div class="inline-flex items-center gap-6">
+          <img
+            class="aspect-square w-24 p-1 bg-neutral-1 border-1 border-neutral-6 rounded-lg shadow-xs"
+            src={~p"/images/marketing/app-download-qr-code.svg"}
+            alt="App Download QR Code"
+          />
+          <div class="text-left">
+            <p class="text-xl font-semibold text-neutral-12">Find your next client, today</p>
+            <p>Scan the QR code to download the app</p>
+          </div>
+        </div>
+      </div>
+      <.link :if={@os == "iOS"} href="https://apps.apple.com/us/app/hey-walt/id6593690873">
+        <img class="inline-block h-14" src={~p"/images/vendor/apple/app-store-badge.svg"} alt="Download on App Store" />
+      </.link>
+      <.link :if={@os == "Android"} href="https://play.google.com/store/apps/details?id=ai.heywalt.heywalt">
+        <img
+          class="inline-block h-14"
+          src={~p"/images/vendor/google/play-store-badge.svg"}
+          alt="Download on Play Store"
+        />
+      </.link>
+    </div>
+  </header>
+</div>
+<section id="testimonials" class="py-16 bg-neutral-3 border-y-1 border-neutral-6">
+  <div class="content">
+    <h3 class="!mb-12 text-4xl text-center">What people are saying</h3>
+    <div class="space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="p-6 bg-neutral-1 rounded-lg shadow-xs border-1 border-neutral-6 flex flex-col justify-between">
+          <p class="text-lg mb-4">"In less than a minute from downloading the app, I found a buyer!"</p>
+          <p class="text-sm text-brand-9 font-medium text-right">— Marissa, Texas</p>
+        </div>
+        <div class="p-6 bg-neutral-1 rounded-lg shadow-xs border-1 border-neutral-6 flex flex-col justify-between">
+          <p class="text-lg mb-4">"Wow! This Move Score is amazing! Found 2 active clients in minutes"</p>
+          <p class="text-sm text-brand-9 font-medium text-right">— Chase, Arizona</p>
+        </div>
+        <div class="p-6 bg-neutral-1 rounded-lg shadow-xs border-1 border-neutral-6 flex flex-col justify-between">
+          <p class="text-lg mb-4">
+            "Amazing! Amby quickly identified many of my contacts that were ready to buy and one of those contacts has already closed!"
+          </p>
+          <p class="text-sm text-brand-9 font-medium text-right">— Billy, California</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:max-w-2xl lg:mx-auto">
+        <div class="p-6 bg-neutral-1 rounded-lg shadow-xs border-1 border-neutral-6 flex flex-col justify-between">
+          <p class="text-lg mb-4">"With Amby, I will never have to buy leads again!"</p>
+          <p class="text-sm text-brand-9 font-medium text-right">— Brad, Texas</p>
+        </div>
+        <div class="p-6 bg-neutral-1 rounded-lg shadow-xs border-1 border-neutral-6 flex flex-col justify-between">
+          <p class="text-lg mb-4">"Amby is a wizard!"</p>
+          <p class="text-sm text-brand-9 font-medium text-right">— Lori, Nevada</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="content pt-8">
+  <section>
+    <div class="grid grid-cols-1 lg:grid-cols-2 items-start gap-8 sm:gap-16">
+      <div>
+        <h3 class="!mb-4 text-4xl">Effortlessly connect Amby with SkySlope to streamline your workflow</h3>
+        <ol class="flex flex-col gap-4 mb-6 pl-6 text-lg list-decimal">
+          <li>We enrich your contacts with valuable insights so you can build genuine rapport.</li>
+          <li>
+            With our Move Score&trade;, we organize your contacts based on who's likely to move, so you don't waste time on the mundane.
+          </li>
+          <li>
+            We know staying top of mind is critical, so Amby makes it super easy to send personal messages in 2 easy clicks.
+          </li>
+          <li>
+            Amby has built a seamless integration with Skyslope so you can fire off a listing agreement or buyer agreement to make it official with your new client &ndash; all from the palm of your hand.
+          </li>
+        </ol>
+        <.link class="button button--lg" href={~p"/download"}>
+          Download the app<.icon class="ml-2" name="arrow-right-long" style="solid" />
+        </.link>
+      </div>
+      <div class="p-8 sm:p-16 bg-brand-3 rounded-xl text-center">
+        <div class="mb-6">
+          <.icon class="text-3xl text-brand-9" name="star" style="solid" />
+          <.icon class="text-3xl text-brand-9" name="star" style="solid" />
+          <.icon class="text-3xl text-brand-9" name="star" style="solid" />
+          <.icon class="text-3xl text-brand-9" name="star" style="solid" />
+          <.icon class="text-3xl text-brand-9" name="star" style="solid" />
+        </div>
+        <blockquote>
+          <p class="text-2xl italic font-medium">
+            "It's like having a personal assistant in my pocket… always knowing who to connect with next. No more guessing, just smart, seamless follow-ups."
+          </p>
+          <footer class="mt-4">
+            <cite class="not-italic">
+              <div class="text-lg font-semibold">&ndash; Debbie P.</div>
+              <div class="text-sm font-medium">Realtor at eXp Realty</div>
+            </cite>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+</div>

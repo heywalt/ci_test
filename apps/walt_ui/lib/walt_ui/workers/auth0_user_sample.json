@@ -1,0 +1,26 @@
+{
+  "created_at": "2024-02-17T17:12:16.231Z",
+  "email": "belison@gmail.com",
+  "email_verified": true,
+  "family_name": "Elison",
+  "given_name": "Bart",
+  "identities": [
+      {
+          "provider": "google-oauth2",
+          "access_token": "ya29.a0AfB_byBVCTni_Rcg3sNkaBRiNSNIAfixQwZev_7bSxhoXIo9Iv-wAyuXPiOa5kGdo5fUaCl75zu7ZhkUxk66H7TCUcP-xIpkHfHWckM4X9DrSqBYscWAaXX8lP0wI14AJqujAKETFF6sxWNzSQXPBqywFKz-KIp1MVWyaCgYKAUISARASFQHGX2MiuaETSzJXG3CNkAZP1yssCg0171",
+          "expires_in": 3599,
+          "user_id": "106257498322272298216",
+          "connection": "google-oauth2",
+          "isSocial": true
+      }
+  ],
+  "locale": "en",
+  "name": "Bart Elison",
+  "nickname": "belison",
+  "picture": "https://lh3.googleusercontent.com/a/ACg8ocIpETboy-QTGZVZCPNQhN0nzdm_or01GbBVvMDnaViD0as=s96-c",
+  "updated_at": "2024-02-17T17:12:16.231Z",
+  "user_id": "google-oauth2|106257498322272298216",
+  "last_ip": "73.35.9.172",
+  "last_login": "2024-02-17T17:12:16.229Z",
+  "logins_count": 1
+}

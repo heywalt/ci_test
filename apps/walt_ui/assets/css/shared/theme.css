@@ -1,0 +1,31 @@
+@theme {
+  --font-*: initial;
+  --font-display: "Figtree";
+  --font-fallback: system-ui, sans-serif;
+
+  --color-brand-1: #FDFDFF;
+  --color-brand-2: #F7F8FF;
+  --color-brand-3: #EFF1FF;
+  --color-brand-4: #E4E7FF;
+  --color-brand-5: #D8DCFF;
+  --color-brand-6: #C8CEFF;
+  --color-brand-7: #B4BAFE;
+  --color-brand-8: #989DF6;
+  --color-brand-9: #4836BF;
+  --color-brand-10: #3C21AC;
+  --color-brand-11: #574FCD;
+  --color-brand-12: #2A2766;
+
+  --color-neutral-1: #FCFCFD;
+  --color-neutral-2: #F9F9FB;
+  --color-neutral-3: #EFF0F3;
+  --color-neutral-4: #E7E8EC;
+  --color-neutral-5: #E0E1E6;
+  --color-neutral-6: #D8D9E0;
+  --color-neutral-7: #CDCED7;
+  --color-neutral-8: #B9BBC6;
+  --color-neutral-9: #8B8D98;
+  --color-neutral-10: #80828D;
+  --color-neutral-11: #62636C;
+  --color-neutral-12: #1E1F24;
+}
