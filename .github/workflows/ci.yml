@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ci:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:14.13
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Prep Build
+        run: bin/package
+
+      - name: Build test image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.test
+          load: true
+          tags: walt-ui-test:latest
+          build-args: |
+            OBAN_LICENSE_KEY=${{ secrets.OBAN_LICENSE_KEY }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Check formatting
+        run: docker run --rm walt-ui-test:latest mix format --check-formatted
+
+      - name: Run Credo
+        run: docker run --rm -e MIX_ENV=dev walt-ui-test:latest mix credo --strict
+
+      - name: Run tests
+        run: |
+          docker run --rm --network host walt-ui-test:latest \
+            sh -c "mix ecto.create && mix ecto.migrate && mix test"
