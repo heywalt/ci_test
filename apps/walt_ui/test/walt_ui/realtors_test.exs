@@ -23,7 +23,9 @@ defmodule WaltUi.RealtorsTest do
 
   describe "import_csv/1" do
     test "basic import — creates identities, records, and lookup tables for 2 rows" do
-      # Header order: Email,First name,Last name,Brokerage,Address 1,Address 2,City,State,Zip,Cell Phone,Phone,License type,License number,Association
+      # Header order: Email, First name, Last name, Brokerage, Address 1,
+      # Address 2, City, State, Zip, Cell Phone, Phone, License type,
+      # License number, Association
       path =
         write_csv([
           "alice@example.com,Alice,Smith,Acme Realty,123 Main St,,Denver,CO,80202,5551234567,,Broker,BR-001,Denver Board",
@@ -139,7 +141,9 @@ defmodule WaltUi.RealtorsTest do
       assert record |> Repo.preload(:phone_numbers) |> Map.get(:phone_numbers) |> length() == 0
 
       # Import CSV row matching that content hash but including a cell phone
-      # Header: Email,First name,Last name,Brokerage,Address 1,Address 2,City,State,Zip,Cell Phone,Phone,License type,License number,Association
+      # Header: Email, First name, Last name, Brokerage, Address 1,
+      # Address 2, City, State, Zip, Cell Phone, Phone, License type,
+      # License number, Association
       path =
         write_csv([
           "agent1@example.com,Jane,Doe,,,,,,,5551112222,,Broker,BR-100,"
