@@ -52,15 +52,7 @@ defmodule WaltUi.Contacts.RealEstateAgentEmailMatcherTest do
       assert RealEstateAgentEmailMatcher.any_match?(["info@realestate.co"])
     end
 
-    test "matches substring 'agent' in email" do
-      assert RealEstateAgentEmailMatcher.any_match?(["topagent@gmail.com"])
-    end
-
-    test "matches substring 'home' in email" do
-      assert RealEstateAgentEmailMatcher.any_match?(["salsellshomes@gmail.com"])
-    end
-
-    test "matches substring 'sell' in email" do
+    test "matches substring 'homes' in email" do
       assert RealEstateAgentEmailMatcher.any_match?(["salsellshomes@gmail.com"])
     end
 
@@ -68,8 +60,20 @@ defmodule WaltUi.Contacts.RealEstateAgentEmailMatcherTest do
       assert RealEstateAgentEmailMatcher.any_match?(["info@onegroup.com"])
     end
 
-    test "matches substring 'house' in email" do
-      assert RealEstateAgentEmailMatcher.any_match?(["myhouse@example.com"])
+    test "matches @redsign.com domain" do
+      assert RealEstateAgentEmailMatcher.any_match?(["jane@redsign.com"])
+    end
+
+    test "matches partial domain @remax" do
+      assert RealEstateAgentEmailMatcher.any_match?(["jane@remax.net"])
+    end
+
+    test "does not match 'agent' substring (removed pattern)" do
+      refute RealEstateAgentEmailMatcher.any_match?(["topagent@gmail.com"])
+    end
+
+    test "does not match 'house' substring (removed pattern)" do
+      refute RealEstateAgentEmailMatcher.any_match?(["myhouse@example.com"])
     end
 
     test "matches case-insensitively" do
